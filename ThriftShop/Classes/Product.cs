@@ -45,5 +45,39 @@ namespace ThriftShop.Classes
             var filter = (from p in db.products join b in db.brands on p.IDbrand equals b.Id where (p.IDbrand == b.Id && p.price <= pric ) select new { Name = p.name, Category = p.category, Price = p.price, Brand = b.name }).ToList<object>();
             return filter.ToList();
         }
+        public IEnumerable<object> sortProduct(string w, string checkedButton)
+        {
+            SqlConnection conn = new SqlConnection(ThriftShop.Properties.Settings.Default.thriftdbConnectionString);
+            thriftLinqDataContext db = new thriftLinqDataContext(conn);
+            IEnumerable<object> sorted = Enumerable.Empty<object>();
+            if (object.Equals(w, "Price"))
+            {
+                if (object.Equals(checkedButton, "Ascending"))
+                {
+                    sorted = (from p in db.products orderby p.price ascending select new { Name = p.name, Price = p.price, Category = p.category, Brand = (from pp in db.products join b in db.brands on pp.IDbrand equals b.Id where pp.IDbrand == b.Id select new { Name = b.name }) }).ToList<object>();
+                    //return sorted.ToList();
+                }
+                else
+                {
+                    sorted = (from p in db.products orderby p.price descending select new { Name = p.name, Price = p.price, Category = p.category, Brand = (from pp in db.products join b in db.brands on pp.IDbrand equals b.Id where pp.IDbrand == b.Id select new { Name = b.name }) }).ToList<object>();
+                    //return sorted.ToList();
+                }
+            }
+            else
+            {
+                if (object.Equals(checkedButton, "Ascending"))
+                {
+                    sorted = (from p in db.products orderby p.name ascending select new { Name = p.name, Price = p.price, Category = p.category, Brand = (from pp in db.products join b in db.brands on pp.IDbrand equals b.Id where pp.IDbrand == b.Id select new { Name = b.name }) }).ToList<object>();
+                    //return sorted.ToList();
+                }
+                else 
+                {
+                    sorted = (from p in db.products orderby p.name descending select new { Name = p.name, Price = p.price, Category = p.category, Brand = (from pp in db.products join b in db.brands on pp.IDbrand equals b.Id where pp.IDbrand == b.Id select new { Name = b.name }) }).ToList<object>();
+                    //return sorted.ToList();
+                }
+            }
+            return sorted.ToList();
+            
+        }
     }
 }
