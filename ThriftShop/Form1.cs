@@ -57,6 +57,8 @@ namespace ThriftShop
             var q = db.brands.Select(c => new { c.name });
             ProductBrand.DataSource = q.ToList();
             ProductBrand.ValueMember = "Name";
+            sortBy.Items.Add("Price");
+            sortBy.Items.Add("Name");
            
         }
 
@@ -82,6 +84,20 @@ namespace ThriftShop
         {
             Brand b = new Brand();
             dataGridView1.DataSource = b.showSortedBrands();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Product p = new Product();
+            string sel = this.sortBy.GetItemText(this.sortBy.SelectedItem);
+            string wa = "";
+            bool isChecked1 = Ascending.Checked;
+            //bool isChecked2 = Descending.Checked;
+            if (isChecked1)
+                wa = Ascending.Text;
+            else
+                wa = Descending.Text;
+            dataGridView1.DataSource = p.sortProduct(sel, wa);
         }
     }
 }
