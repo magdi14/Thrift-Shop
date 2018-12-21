@@ -91,12 +91,12 @@ namespace ThriftShop
             Product p = new Product();
             string sel = this.sortBy.GetItemText(this.sortBy.SelectedItem);
             string wa = "";
-            bool isChecked1 = Ascending.Checked;
+            bool isChecked1 = ascen.Checked;
             //bool isChecked2 = Descending.Checked;
             if (isChecked1)
-                wa = Ascending.Text;
+                wa = ascen.Text;
             else
-                wa = Descending.Text;
+                wa = descen.Text;
             dataGridView1.DataSource = p.sortProduct(sel, wa);
             wa = "";
         }
