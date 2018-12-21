@@ -20,7 +20,14 @@ namespace ThriftShop.Classes
             db.brands.InsertOnSubmit(b);
             db.SubmitChanges();
         }
+        public IEnumerable<object> showSortedBrands()
+        {
+            SqlConnection conn = new SqlConnection(ThriftShop.Properties.Settings.Default.thriftdbConnectionString);
+            thriftLinqDataContext db = new thriftLinqDataContext(conn);
+            var filter = from b in db.brands orderby b.numOfproducts descending select new { Name = b.name, Products = b.numOfproducts };
+            return filter.ToList();
+        }
         
-        
+
     }
 }
