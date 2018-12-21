@@ -35,5 +35,13 @@ namespace ThriftShop.Classes
             return showAll.ToList();
             
         }
+        public IEnumerable<object> FilterByPrice(string price)
+        {
+            SqlConnection conn = new SqlConnection(ThriftShop.Properties.Settings.Default.thriftdbConnectionString);
+            thriftLinqDataContext db = new thriftLinqDataContext(conn);
+            double pric = Convert.ToDouble(price);
+            var filter = (from p in db.products join b in db.brands on p.IDbrand equals b.Id where (p.IDbrand == b.Id && p.price <= pric ) select new { Name = p.name, Category = p.category, Price = p.price, Brand = b.name }).ToList<object>();
+            return filter.ToList();
+        }
     }
 }
