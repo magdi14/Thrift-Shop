@@ -17,6 +17,7 @@ namespace ThriftShop.Classes
             thriftLinqDataContext db = new thriftLinqDataContext(conn);
             brand b = new brand();
             b.name = name;
+            b.numOfproducts = 0;
             db.brands.InsertOnSubmit(b);
             db.SubmitChanges();
         }
