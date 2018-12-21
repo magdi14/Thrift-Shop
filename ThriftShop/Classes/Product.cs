@@ -24,6 +24,8 @@ namespace ThriftShop.Classes
             pro.category = pcat;
             var q = from b in db.brands where b.name == bname select b.Id;
             pro.IDbrand = q.First();
+            var up = db.brands.FirstOrDefault(b => b.name.Equals(bname));
+            up.numOfproducts += 1;
             db.products.InsertOnSubmit(pro);
             db.SubmitChanges();
         }
