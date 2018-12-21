@@ -24,7 +24,7 @@ namespace ThriftShop
         private void Form1_Load(object sender, EventArgs e)
         {
             thriftLinqDataContext db = new thriftLinqDataContext(conn);
-            var q = from a in db.brands select new { Name = a.name };
+            var q = from a in db.brands select new { Name = a.name, Products = a.numOfproducts };
             dataGridView1.DataSource = q;
             fillCompoBox();
         }
@@ -34,6 +34,7 @@ namespace ThriftShop
             Brand b = new Brand();
             b.addNewBrand(addnewBrand.Text);
             addnewBrand.Clear();
+            MessageBox.Show("Brand Added Successfully!");
             thriftLinqDataContext db = new thriftLinqDataContext(conn);
             var q = from a in db.brands select new { Name = a.name };
             dataGridView1.DataSource = q;
@@ -48,6 +49,7 @@ namespace ThriftShop
             productName.Clear();
             ProductCate.Clear();
             ProductPrice.Clear();
+            MessageBox.Show("Product Added Successfully!");
         }
         private void fillCompoBox()
         {
@@ -74,6 +76,12 @@ namespace ThriftShop
             Product p = new Product();
             string pr = InputPrice.Text;
             dataGridView1.DataSource = p.FilterByPrice(pr);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Brand b = new Brand();
+            dataGridView1.DataSource = b.showSortedBrands();
         }
     }
 }
