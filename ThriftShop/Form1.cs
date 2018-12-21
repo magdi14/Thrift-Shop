@@ -98,6 +98,7 @@ namespace ThriftShop
             else
                 wa = Descending.Text;
             dataGridView1.DataSource = p.sortProduct(sel, wa);
+            wa = "";
         }
     }
 }
