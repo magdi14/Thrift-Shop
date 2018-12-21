@@ -68,5 +68,12 @@ namespace ThriftShop
             Product p = new Product();
             dataGridView1.DataSource =  p.showAllProducts();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Product p = new Product();
+            string pr = InputPrice.Text;
+            dataGridView1.DataSource = p.FilterByPrice(pr);
+        }
     }
 }
